@@ -1,6 +1,4 @@
-// swift-tools-version:5.9
-// The swift-tools-version declares the minimum version of Swift required to build this package.
-
+// swift-tools-version:5.7
 import PackageDescription
 
 let package = Package(
@@ -12,8 +10,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "accesslint",
-            url: "https://github.com/mauricecarrier7/AccessLint-Distribution/releases/download/1.0.0/accesslint-1.0.0.artifactbundle.zip",
-            checksum: "45bc79dd087541e9241f0224ae2cb6fca78ef94d1980af9c035d1e41b34d9df3"
+            url: "https://github.com/mauricecarrier7/AccessLint/releases/download/v1.2.0/accesslint-1.2.0.artifactbundle.zip",
+            checksum: "0b6e53c5b77b97381540e4a6f6dd2b61e237441f7c97d724077adf1d27d6e6f2"
         )
     ]
 )
