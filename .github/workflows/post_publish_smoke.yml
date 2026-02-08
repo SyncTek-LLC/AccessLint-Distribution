@@ -1,0 +1,28 @@
+name: Post-publish smoke test
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download release assets (from public URL)
+        run: |
+          TAG="${{ github.event.release.tag_name }}"
+          if [ -z "$TAG" ]; then TAG="v1.2.0"; fi
+          curl -L "https://github.com/SyncTek-LLC/AccessLint-Distribution/releases/download/$TAG/accesslint" -o accesslint
+          curl -L "https://github.com/SyncTek-LLC/AccessLint-Distribution/releases/download/$TAG/SHA256SUMS" -o SHA256SUMS
+
+      - name: Verify checksums
+        run: |
+          shasum -a 256 -c SHA256SUMS
+
+      - name: Run --version
+        run: |
+          chmod +x accesslint
+          ./accesslint --version

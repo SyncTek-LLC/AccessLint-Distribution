@@ -6,6 +6,13 @@
 [![macOS 13+](https://img.shields.io/badge/macOS-13+-blue.svg)](https://www.apple.com/macos/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
+
+## Verifying downloads
+
+We publish a `SHA256SUMS` file with each release so you can verify the artifacts you downloaded.
+
+See: `distribution/VERIFYING_DOWNLOADS.md`
+
 ---
 
 ## Why AccessLint
@@ -24,7 +31,7 @@ Get running in under 2 minutes:
 
 ```bash
 # 1. Download the universal binary (works on Intel + Apple Silicon)
-curl -L https://github.com/mauricecarrier7/AccessLint/releases/latest/download/accesslint -o accesslint
+curl -L https://github.com/SyncTek-LLC/AccessLint-Distribution/releases/latest/download/accesslint -o accesslint
 
 # 2. Make it executable and move to PATH
 chmod +x accesslint
@@ -48,7 +55,7 @@ accesslint analyze --path ./MyApp
 Fastest option—pre-built universal binary for macOS:
 
 ```bash
-curl -L https://github.com/mauricecarrier7/AccessLint/releases/latest/download/accesslint -o accesslint
+curl -L https://github.com/SyncTek-LLC/AccessLint-Distribution/releases/latest/download/accesslint -o accesslint
 chmod +x accesslint
 sudo mv accesslint /usr/local/bin/
 
@@ -180,7 +187,7 @@ jobs:
       # Install AccessLint
       - name: Install AccessLint
         run: |
-          curl -L https://github.com/mauricecarrier7/AccessLint/releases/latest/download/accesslint -o accesslint
+          curl -L https://github.com/SyncTek-LLC/AccessLint-Distribution/releases/latest/download/accesslint -o accesslint
           chmod +x accesslint
           sudo mv accesslint /usr/local/bin/
 
