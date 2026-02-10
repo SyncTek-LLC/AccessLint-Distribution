@@ -41,7 +41,7 @@ brew install accesslint
 Download the universal binary (Intel + Apple Silicon):
 
 ```bash
-curl -L https://github.com/mauricecarrier7/AccessLint-Distribution/releases/latest/download/accesslint -o accesslint
+curl -L https://github.com/SyncTek-LLC/AccessLint-Distribution/releases/latest/download/accesslint -o accesslint
 chmod +x accesslint
 sudo mv accesslint /usr/local/bin/
 ```
@@ -53,7 +53,7 @@ Add as a binary target dependency:
 ```swift
 // Package.swift
 dependencies: [
-    .package(url: "https://github.com/mauricecarrier7/AccessLint-Distribution.git", from: "1.3.0")
+    .package(url: "https://github.com/SyncTek-LLC/AccessLint-Distribution.git", from: "1.3.0")
 ]
 ```
 
@@ -292,8 +292,8 @@ Custom rules are available on the Enterprise tier. Contact [info@synctek.io](mai
 ## Links
 
 - **Website**: [accesslint.app](https://accesslint.app)
-- **Releases**: [github.com/mauricecarrier7/AccessLint-Distribution/releases](https://github.com/mauricecarrier7/AccessLint-Distribution/releases)
-- **Issues**: [github.com/mauricecarrier7/AccessLint-Distribution/issues](https://github.com/mauricecarrier7/AccessLint-Distribution/issues)
+- **Releases**: [github.com/SyncTek-LLC/AccessLint-Distribution/releases](https://github.com/SyncTek-LLC/AccessLint-Distribution/releases)
+- **Issues**: [github.com/SyncTek-LLC/AccessLint-Distribution/issues](https://github.com/SyncTek-LLC/AccessLint-Distribution/issues)
 - **Contact**: [info@synctek.io](mailto:info@synctek.io)
 
 ---
