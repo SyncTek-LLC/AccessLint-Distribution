@@ -1,10 +1,17 @@
-# AccessLint
+<p align="center">
+  <img src="logo.png" alt="AccessLint" width="100" height="100" style="border-radius: 20px;">
+</p>
 
-**Static accessibility analysis for iOS/Swift.** Catch missing labels, fixed fonts, and accessibility issues in SwiftUI and UIKit code — before your users do.
+<h1 align="center">AccessLint</h1>
 
-[![Swift 5.9+](https://img.shields.io/badge/Swift-5.9+-orange.svg)](https://swift.org)
-[![macOS 13+](https://img.shields.io/badge/macOS-13+-blue.svg)](https://www.apple.com/macos/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+<p align="center"><strong>Static accessibility analysis for iOS/Swift.</strong></p>
+<p align="center"> Catch missing labels, fixed fonts, and accessibility issues in SwiftUI and UIKit code — before your users do.</p>
+
+<p align="center">
+  <a href="https://swift.org"><img src="https://img.shields.io/badge/Swift-5.9+-orange.svg" alt="Swift 5.9+"></a>
+  <a href="https://www.apple.com/macos/"><img src="https://img.shields.io/badge/macOS-13+-blue.svg" alt="macOS 13+"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License: MIT"></a>
+</p>
 
 ---
 
