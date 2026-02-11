@@ -10,8 +10,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "accesslint",
-            url: "https://github.com/SyncTek-LLC/AccessLint-Distribution/releases/download/v1.3.1/accesslint-1.3.1.artifactbundle.zip",
-            checksum: "dd33b21efe1f72da20814022a8f91d243d83081da71c64728cc9b4348f06801d"
+            url: "https://github.com/SyncTek-LLC/AccessLint/releases/download/v1.3.1/accesslint-1.3.1.artifactbundle.zip",
+            checksum: "b5e33dea791559201a203b28d7a3767bba7b710ac5d551a3b9b890fcb12bb109"
         )
     ]
 )
