@@ -1,0 +1,95 @@
+name: Issue Resolved — Follow Up
+
+on:
+  issues:
+    types: [closed]
+
+permissions:
+  issues: read
+
+jobs:
+  notify-sender:
+    runs-on: ubuntu-latest
+    # Only notify for email-originated issues
+    if: contains(join(github.event.issue.labels.*.name, ','), 'email')
+    steps:
+      - name: Send resolution email
+        uses: actions/github-script@v7
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const body = issue.body || '';
+            const title = issue.title || '';
+
+            // Extract the original sender from the hidden comment
+            const replyMatch = body.match(/<!-- REPLY_TO: (.+?) -->/);
+            if (!replyMatch) {
+              console.log('No REPLY_TO found in issue body — skipping notification');
+              return;
+            }
+
+            const senderEmail = replyMatch[1];
+            const issueUrl = issue.html_url;
+
+            // Determine the type from labels
+            const labels = issue.labels.map(l => l.name);
+            let category = 'request';
+            if (labels.includes('bug')) category = 'bug';
+            else if (labels.includes('enhancement')) category = 'feature request';
+            else if (labels.includes('support')) category = 'question';
+
+            // Strip the [Email] prefix from the title for cleaner messaging
+            const cleanTitle = title.replace(/^\[Email\]\s*/, '');
+
+            const emailBody = [
+              'Hi there,',
+              '',
+              `Good news -- your ${category} regarding "${cleanTitle}" has been resolved.`,
+              '',
+              labels.includes('bug')
+                ? 'The fix will be included in our next release. To get the latest version right away:\n\n  brew update && brew upgrade accesslint'
+                : labels.includes('enhancement')
+                ? 'We have reviewed your suggestion and incorporated it into our plans. We build AccessLint as lasting infrastructure, so every feature gets the attention it deserves.'
+                : 'We hope the resolution addresses your question. If you need anything else, just reply to this email.',
+              '',
+              `You can see the full discussion and resolution here:\n${issueUrl}`,
+              '',
+              'If this does not fully resolve things for you, just reply to this email and we will reopen your ticket.',
+              '',
+              'Thank you for helping make AccessLint better. We mean it -- every report makes the tool stronger for everyone.',
+              '',
+              '-- The AccessLint Team at SyncTek',
+            ].join('\n');
+
+            // Send via Resend
+            const response = await fetch('https://api.resend.com/emails', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                from: 'AccessLint Support <support@accesslint.app>',
+                to: [senderEmail],
+                subject: `Resolved: ${cleanTitle}`,
+                text: emailBody,
+              }),
+            });
+
+            if (!response.ok) {
+              const text = await response.text();
+              console.error(`Resend API error: ${response.status} ${text}`);
+              return;
+            }
+
+            console.log(`Resolution email sent to ${senderEmail} for issue #${issue.number}`);
+
+            // Add a comment noting that the sender was notified
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              body: `📧 Resolution notification sent to the original reporter.`
+            });
