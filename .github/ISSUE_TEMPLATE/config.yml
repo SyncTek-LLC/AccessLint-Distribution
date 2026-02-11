@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security Vulnerability
+    url: mailto:info@synctek.io?subject=Security%20Vulnerability%20Report
+    about: Report security vulnerabilities privately via email
+  - name: Billing / Account
+    url: mailto:info@synctek.io?subject=Billing%20Support
+    about: For billing or account issues, email us directly

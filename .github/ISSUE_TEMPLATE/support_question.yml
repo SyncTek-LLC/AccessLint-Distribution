@@ -1,0 +1,40 @@
+name: Support Question
+description: Get help with AccessLint setup, configuration, or usage
+title: "[Support]: "
+labels: ["support", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Need help? Check the [quickstart guide](https://accesslint.app/docs.html) and [FAQ](https://accesslint.app/docs.html#faq) first.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What do you need help with?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: topic
+    attributes:
+      label: Topic
+      options:
+        - Installation / Setup
+        - Configuration / Presets
+        - CI/CD Integration
+        - License / Billing
+        - Team Features (baselines, trends, Slack)
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: AccessLint Version
+      description: Run `accesslint --version`
+      placeholder: "1.3.0"
+    validations:
+      required: false

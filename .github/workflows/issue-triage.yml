@@ -1,0 +1,75 @@
+name: Issue Triage
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto-label by template
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const title = issue.title || '';
+            const body = issue.body || '';
+            const labels = [];
+
+            // Route by issue template prefix
+            if (title.startsWith('[Bug]')) {
+              labels.push('bug');
+              // Check if it's a security-related bug
+              const securityKeywords = ['security', 'vulnerability', 'injection', 'xss', 'auth', 'license bypass'];
+              if (securityKeywords.some(kw => body.toLowerCase().includes(kw))) {
+                labels.push('security');
+              }
+            } else if (title.startsWith('[Feature]')) {
+              labels.push('enhancement');
+              // Route by category
+              if (body.includes('New Rule')) labels.push('rules');
+              if (body.includes('CI/CD Integration')) labels.push('ci-cd');
+              if (body.includes('Backend / Dashboard')) labels.push('backend');
+            } else if (title.startsWith('[Support]')) {
+              labels.push('support');
+              // Route by topic
+              if (body.includes('License / Billing')) labels.push('billing');
+              if (body.includes('CI/CD Integration')) labels.push('ci-cd');
+            }
+
+            // Priority detection
+            const urgentKeywords = ['crash', 'data loss', 'cannot install', 'broken', 'blocking'];
+            if (urgentKeywords.some(kw => body.toLowerCase().includes(kw))) {
+              labels.push('priority:high');
+            }
+
+            // Add labels
+            if (labels.length > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: labels
+              });
+            }
+
+            // Auto-respond with acknowledgment
+            const responseMap = {
+              '[Bug]': `Thanks for reporting this bug! We'll investigate and get back to you.\n\nIn the meantime:\n- Make sure you're on the latest version: \`brew upgrade accesslint\`\n- Check the [troubleshooting guide](https://accesslint.app/docs.html#troubleshooting)`,
+              '[Feature]': `Thanks for the feature suggestion! We review all requests and prioritize based on community interest.\n\nFeel free to add more context or examples that would help us understand your use case.`,
+              '[Support]': `Thanks for reaching out! Check these resources while we look into your question:\n\n- [Quickstart Guide](https://accesslint.app/docs.html)\n- [FAQ](https://accesslint.app/docs.html#faq)\n- [Troubleshooting](https://accesslint.app/docs.html#troubleshooting)\n\nWe typically respond within 1 business day.`
+            };
+
+            const prefix = Object.keys(responseMap).find(p => title.startsWith(p));
+            if (prefix) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: responseMap[prefix]
+              });
+            }
