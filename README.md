@@ -60,7 +60,7 @@ Add as a binary target dependency:
 ```swift
 // Package.swift
 dependencies: [
-    .package(url: "https://github.com/SyncTek-LLC/AccessLint-Distribution.git", from: "1.3.0")
+    .package(url: "https://github.com/SyncTek-LLC/AccessLint-Distribution.git", from: "1.3.1")
 ]
 ```
 
@@ -154,7 +154,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: SyncTek-LLC/AccessLint@v1.3.0
+      - uses: SyncTek-LLC/AccessLint@v1.3.1
         with:
           path: ./Sources
           fail-on: major
